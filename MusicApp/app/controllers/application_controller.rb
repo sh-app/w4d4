@@ -22,4 +22,12 @@ class ApplicationController < ActionController::Base
     @current_user = nil
     session[:session_token] = nil
   end
+
+  def force_login
+    unless logged_in?
+      flash[:errors] = ["Sorry, must be logged in to view this page"]
+      redirect_to new_session_url
+    end
+  end
+
 end

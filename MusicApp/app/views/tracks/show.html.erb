@@ -1,0 +1,21 @@
+<h1><%= @track.song %>'s Page </h1>
+<%= render "shared/errors" %>
+<!-- Edit/Delete links -->
+<table>
+  <tr>
+    <form action="<%= edit_track_url %>" method="GET">
+      <%= authenticity_token %>
+      <input type="submit" value="Edit track">
+    </form> &nbsp; &nbsp; &nbsp;
+    <form action="<%= edit_track_url %>" method="POST">
+      <%= authenticity_token %>
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete track">
+    </form>
+  </tr>
+</table>
+<!--  Album -->
+<h3> Listed in: "<%= @track.album.title %>" </h3>
+<a href="<%= album_url(@track.album_id) %>">More tracks from this album</a>
+<!--  Lyrics -->
+<h3>Lyrics:</h3>

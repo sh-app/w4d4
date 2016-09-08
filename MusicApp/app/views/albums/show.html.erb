@@ -1,0 +1,40 @@
+<h1><%= @album.title %> Album's Page </h1>
+<%= render "shared/errors" %>
+<!-- Edit/Delete links -->
+<table>
+  <tr>
+    <form action="<%= edit_album_url %>" method="GET">
+      <%= authenticity_token %>
+      <input type="submit" value="Edit album">
+    </form> &nbsp; &nbsp; &nbsp;
+    <form action="<%= edit_album_url %>" method="POST">
+      <%= authenticity_token %>
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete album">
+    </form>
+  </tr>
+</table>
+<!--  Band -->
+<h3> Recorded by: "<%= @album.band.name %>" </h3>
+<a href="<%= band_url(@album.band_id) %>">More albums from this artist</a>
+<!--  Tracks -->
+<h3>Tracks:</h3>
+<table>
+<% @album.tracks.each do |track| %>
+  <tr>
+    <td><%=track.song%></td>
+    <td><form action="<%= edit_track_url %>" method="GET">
+        <%= authenticity_token %>
+        <input type="submit" value="Edit track">
+        </form>
+    </td>
+    <td><form action="<%= edit_track_url %>" method="POST">
+        <%= authenticity_token %>
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete track">
+        </form>
+    </td>
+  </tr>
+<% end %>
+</table>
+<a href="<%= new_album_track_url(@album) %>">Add Tracks</a>

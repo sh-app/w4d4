@@ -1,0 +1,40 @@
+<a href="<%=bands_url%>">Back to band index</a>
+<br><br>
+<h1><%= @band.name %>'s Page </h1>
+<%= render "shared/errors" %>
+<!-- Edit/Delete links -->
+<table>
+  <tr>
+    <form action="<%= edit_band_url %>" method="GET">
+      <%= authenticity_token %>
+      <input type="submit" value="Edit band">
+    </form> &nbsp; &nbsp; &nbsp;
+    <form action="<%= band_url(@band) %>" method="POST">
+      <%= authenticity_token %>
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete band">
+    </form>
+  </tr>
+</table>&nbsp; &nbsp; &nbsp;
+<!--  Album -->
+<h3>Albums:</h3>
+<table>
+<% @band.albums.each do |album| %>
+  <tr>
+    <td> <a href="<%=album_url(album)%>"><%= album.title %></a></td>
+    <td><form action="<%= edit_album_url %>" method="GET">
+        <%= authenticity_token %>
+        <input type="submit" value="Edit album">
+        </form>
+    </td>
+    <td><form action="<%= album_url(album) %>" method="POST">
+        <%= authenticity_token %>
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete album">
+        </form>
+    </td>
+  </tr>
+<% end %>
+</table>
+<br>
+<a href="<%= new_band_album_url(@band) %>">Add Albums</a>

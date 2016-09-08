@@ -1,10 +1,12 @@
-class Artist < ActiveRecord::Base
+class Album < ActiveRecord::Base
+
+  validates :title, :band_id, :record_type, presence: true
 
   has_many(
     :tracks,
     class_name: 'Track',
     primary_key: :id,
-    foreign_key: :track_id,
+    foreign_key: :album_id,
     dependent: :destroy
   )
   belongs_to(

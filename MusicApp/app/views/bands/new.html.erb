@@ -1,0 +1,10 @@
+<h1>Add a band:</h1>
+<%= render "shared/errors" %>
+<form action="<%= bands_url %>" method="POST">
+  <%= authenticity_token %>
+  <label>Name:
+    <input type="text" name="band[name]" placeholder="band name">
+  </label>
+  <br><br>
+  <input type="submit" value="Add Band">
+</form>

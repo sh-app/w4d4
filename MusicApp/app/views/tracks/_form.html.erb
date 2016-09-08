@@ -1,0 +1,40 @@
+<!--  Checking if album exists-->
+<% unless track.persisted? %>
+  <% action = tracks_url %>
+  <% value = "Create Track" %>
+
+<% else %>
+  <% action = track_url(track) %>
+  <% value = "Edit Track" %>
+<% end %>
+
+<form action="<%= action %>" method="POST">
+  <%= authenticity_token %>
+  <% if track.persisted? %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  <label>Song Title:
+    <input type="text" name="track[song]" placeholder="<%= track.song || "Song title" %>">
+  </label>
+  <br><br>
+  <label>Listed In:
+    <select name="track[album_id]">
+      <option "selected">Select an Album</option>
+      <% albums.each do |album| %>
+      <option value="<%= album.id %>" <%= "selected" if  album.id == track.album_id %> ><%= album.title %></option>
+      <% end %>
+    </select>
+  </label>
+  <br><br>
+  <label>Regular track
+    <input type="radio" name="track[track_type]" value="REGULAR" <%= "checked" if track.track_type == "REGULAR" %>>
+  </label>
+  <label>Bonus track
+    <input type="radio" name="track[track_type]" value="BONUS" <%= "checked" if track.track_type == "BONUS" %>>
+  </label>
+  <br><br>
+  <label>
+    <textarea><%=track.lyrics%></textarea>
+  </label><br><br>
+  <input type="submit" value="<%= value %>">
+</form>

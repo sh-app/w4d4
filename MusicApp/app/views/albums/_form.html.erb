@@ -1,0 +1,37 @@
+<!--  Checking if album exists-->
+<% unless album.persisted? %>
+  <% action = albums_url %>
+  <% value = "Create Album" %>
+
+<% else %>
+  <% action = album_url(album) %>
+  <% value = "Edit Album" %>
+<% end %>
+
+<form action="<%= action %>" method="POST">
+  <%= authenticity_token %>
+  <% if album.persisted? %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  <label>Title:
+    <input type="text" name="album[title]" placeholder="<%= album.title || "title" %>">
+  </label>
+  <br><br>
+  <label>Recorded by:
+    <select name="album[band_id]">
+      <option "selected">Select a Band</option>
+      <% bands.each do |band| %>
+      <option value="<%= band.id %>" <%= "selected" if  band.id == album.band_id %> ><%= band.name %></option>
+      <% end %>
+    </select>
+  </label>
+  <br><br>
+  <label>Live recording
+    <input type="radio" name="album[record_type]" value="LIVE" <%= "checked" if album.record_type == "LIVE" %>>
+  </label>
+  <label>Studio recording
+    <input type="radio" name="album[record_type]" value="STUDIO" <%= "checked" if album.record_type == "LIVE" %>>
+  </label>
+  <br><br>
+  <input type="submit" value="<%= value %>">
+</form>
