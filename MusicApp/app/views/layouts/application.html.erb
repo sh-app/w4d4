@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MusicApp</title>
+  <%= csrf_meta_tags %>
+</head>
+<header>
+  <% if current_user %>
+
+    You're logged in using: <strong><%=current_user.email%></strong>
+    <br><br>
+    <form action="<%= session_url %>" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+      <%= authenticity_token %>
+      <input type="submit" value="Log Out">
+    </form>
+
+  <% else %>
+    <h3><a href="<%= new_session_url %>">Log In</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%= new_user_url %>">Create an Account</a></h3>
+  <% end %>
+<hr>
+</header>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
